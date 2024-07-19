@@ -124,10 +124,12 @@ cd custom-nothing-glyph-tools
 ```bash
 pip3 install -r requirements.txt
 ```
-Sometimes it is also just `pip` instead of `pip3`.
+> [!NOTE]
+> On some systems, you might need to use pip instead of pip3.
 
 ## :sparkles: Making a custom Glyph composition
-I would recommend using [Audacity&reg;](https://www.audacityteam.org/) to make your life easier. You can use it to cut your audio to the right length, layer effects on it, set Labels (which will come in handy later) and more.
+###Prepare Your Sound
+Using Audacity&reg; can make this process easier. It allows you to cut, edit, and add effects to your audio file.
 
 ### Cutting the sound
 You can skip to [Creating the Glyph format with Audacity&reg;](#creating-the-glyph-format-with-audacity) if you already have the sound cut to the right length and the right codec (`opus`).
@@ -148,6 +150,9 @@ To make our lives easier we can utilize Audacity&reg;'s Labels functionality and
 
 I would recommend saving your Audacity&reg; project regularly.
 
+ **AUTHOR tag**: Stores the light data.
+ **CUSTOM1 tag**: Stores data for the app to display.
+
 > [!NOTE]
 > You can also use the [MidiToLabel](./MidiToLabel.py) script to transform MIDI files to Audacity Labels. Use the `--help` command on the script to learn more.
 
@@ -166,8 +171,24 @@ Each Label should be named like this: `[#]glyphId-lightLevelFrom[-lightLevelTo[-
 * **lightLevelTo** *(Optional)*: In percent 0 to 100. The default is *lightLevelFrom*.
 * **Mode** *(Optional)*: Currently there are three modes supported ([Desmos Graphs](https://www.desmos.com/calculator/92ajzgfbat)):
     * LIN: Linear Interpolation (default)
+      - Effect: The light levels change at a steady, constant rate.
+      - Example: If you set a light to gradually brighten from dim to bright it will increase in brightness evenly throughout the transition, imagine a dimmer switch on a light that moves smoothly from 
+                 low to high brightness
+      
     * EXP: Exponential Interpolation
+      - Effect: The light levels start changing slowly and then accelerate quickly, or vice versa.
+      - Example: If you want a light to start dimming and then suddenly brighten quickly or to brighten slowly at first and then rapidly this method will give you that effect what it does is like the 
+                 acceleration of a car that starts slow and then speeds up rapidly
+  
     * LOG: Logarithmic Interpolation
+      - Effect: The light levels start changing rapidly and then slow down towards the end.
+      - Example: If you want a light to quickly reach a certain brightness and then gradually level off this method will achieve that it is similar to a car that accelerates quickly but then decelerates 
+                 smoothly
+    In summary:
+
+LIN: Steady smooth change
+EXP: Starts slow and then speeds up (or Vise versa)
+LOG: Starts fast and then slows down
 
 > [!IMPORTANT]
 > The brackets (`[` and `]`) mean optional. Therefore do **NOT** include them in the Label name!
